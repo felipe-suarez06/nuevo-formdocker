@@ -5,6 +5,7 @@ import express from 'express';
 import schema from './schema';
 import multer from 'multer';
 import getConnection from './../libs/postgres.js';
+import bodyParser from 'body-parser';
 
 async function startApolloServer() {
   const pgClient = await getConnection();
@@ -18,6 +19,7 @@ async function startApolloServer() {
   await server.start();
 
   const app = express();
+  app.use(bodyParser.json({ limit: '10mb' })); // Ajusta el límite según tus necesidades
 
   // Configuración de Multer
   const upload = multer({ dest: 'uploads/' }); // Directorio donde se guardarán los archivos temporales
